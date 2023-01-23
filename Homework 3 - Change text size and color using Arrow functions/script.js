@@ -12,26 +12,23 @@
 
 let textSize = document.getElementById('textSize');
 let color = document.getElementById('color');
-let element = document.getElementById('element');
 let button = document.getElementById('btn');
 let header = document.querySelector('h1');
 
 
 
-let changeTextColor = (header, color) =>{
-    let colorValue = color.value;
-    header.style.color = colorValue;
-    console.log(colorValue);
-    return;
+let changeTextColor = (text, colorInput) =>{
+
+    
+    return text.style.color = colorInput.value;
 
 }
 
-let changeTextSize = (header, textSize) =>{
+let changeTextSize = (headerText, textSizeInput) =>{
 
-    textSize.value === ''? header.style.fontSize = 24 +'px': header.style.fontSize =  textSize.value +'px';
+    return textSizeInput.value === ''? headerText.style.fontSize = 24 +'px': headerText.style.fontSize =  textSizeInput.value +'px';
    
-    console.log(textSize.value);
-    return;
+    
   }
 
 button.addEventListener('click', () =>{
