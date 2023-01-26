@@ -1,3 +1,7 @@
+
+
+
+
 // Task 1
 // 1. Create html element
 // 2. Create script
@@ -79,10 +83,46 @@ function makeDataRows(data,table){
         
         }
         let button2 = document.createElement('button');
+        button2.id = 'btn_2';
         button2.innerHTML = 'Next 10';
         button.after(button2);
+
+        button2.addEventListener('click', () =>{
+
+            fetch('https://swapi.dev/api/planets/?page=2')
+            .then(function(res){
+        
+                return res.json();
+                
+            })
+            .then(function(data){
+                console.log('Data:',data);
+                getNextTen(data,table);
+                
+        
+            })
+            .catch(function(error){
+        
+                console.log('error:', error);
+            })
+    
+    
+        })
         
         
     }
 
+    function getNextTen(data){
+        let planets  = data;
+        let td = document.querySelector('td')
 
+        for (let i = 0; i < planets.results.length; i++) {
+    
+            
+            td.innerHTML = `<td style ='border:1px solid black';>${data.results[i].name}</td><td style ='border:1px solid black';>${planets.results[i].climate}</td><td style ='border:1px solid black';>${planets.results[i].gravity}</td><td style ='border:1px solid black';>${planets.results[i].population}</td>`;
+            
+            td.style.color = 'red';
+            }
+
+    }
+    
