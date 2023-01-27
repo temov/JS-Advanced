@@ -77,7 +77,7 @@ function makeDataRows(data,table){
 
         let datasRow = document.createElement("tr");
         datasRow.style.color = 'blue';
-        datasRow.innerHTML = `<td style ='border:1px solid black';>${data.results[i].name}</td><td style ='border:1px solid black';>${planets.results[i].climate}</td><td style ='border:1px solid black';>${planets.results[i].gravity}</td><td style ='border:1px solid black';>${planets.results[i].population}</td>`;
+        datasRow.innerHTML = `<td style ='border:1px solid black';>${planets.results[i].name}</td><td style ='border:1px solid black';>${planets.results[i].climate}</td><td style ='border:1px solid black';>${planets.results[i].gravity}</td><td style ='border:1px solid black';>${planets.results[i].population}</td>`;
         table.appendChild(datasRow);
         
         
@@ -97,7 +97,7 @@ function makeDataRows(data,table){
             })
             .then(function(data){
                 console.log('Data:',data);
-                getNextTen(data,table);
+                getNextTen(data);
                 
         
             })
@@ -114,15 +114,65 @@ function makeDataRows(data,table){
 
     function getNextTen(data){
         let planets  = data;
-        let td = document.querySelector('td')
+
+        let btn_2 = document.getElementById('btn_2');
+       
 
         for (let i = 0; i < planets.results.length; i++) {
     
-            
-            td.innerHTML = `<td style ='border:1px solid black';>${data.results[i].name}</td><td style ='border:1px solid black';>${planets.results[i].climate}</td><td style ='border:1px solid black';>${planets.results[i].gravity}</td><td style ='border:1px solid black';>${planets.results[i].population}</td>`;
-            
-            td.style.color = 'red';
+               let tr = document.querySelectorAll('tr');
+
+
+                tr[i+1].innerHTML = `<td style ='border:1px solid black', color:'red';>${planets.results[i].name}</td><td style ='border:1px solid black';>${planets.results[i].climate}</td><td style ='border:1px solid black';>${planets.results[i].gravity}</td><td style ='border:1px solid black';>${planets.results[i].population}</td>`;
+        
+    
             }
 
+            let button3 = document.createElement('button');
+            button3.innerHTML = 'Previous 10';
+            button3.id = 'btn_3';
+            btn_2.after(button3);
+            btn_2.style.display = 'none';
+
+
+            button3.addEventListener('click', () =>{
+
+                fetch('https://swapi.dev/api/planets/?page=1')
+                .then(function(res){
+            
+                    return res.json();
+                    
+                })
+                .then(function(data){
+                    console.log('Data:',data);
+                    getPrevTen(data);
+                    
+            
+                })
+                .catch(function(error){
+            
+                    console.log('error:', error);
+                })
+        
+        
+            })
+
+
+    }
+
+    function getPrevTen(data){
+
+        let planets  = data;
+
+
+        for (let i = 0; i < planets.results.length; i++) {
+    
+               let tr = document.querySelectorAll('tr');
+
+
+                tr[i+1].innerHTML = `<td style ='border:1px solid black', color:'red';>${planets.results[i].name}</td><td style ='border:1px solid black';>${planets.results[i].climate}</td><td style ='border:1px solid black';>${planets.results[i].gravity}</td><td style ='border:1px solid black';>${planets.results[i].population}</td>`;
+        
+    
+            }
     }
     
