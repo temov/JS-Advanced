@@ -86,6 +86,8 @@ function makeDataRows(data,table){
         button2.id = 'btn_2';
         button2.innerHTML = 'Next 10';
         button.after(button2);
+        button.style.display = 'none';
+        
 
         button2.addEventListener('click', () =>{
 
@@ -163,6 +165,7 @@ function makeDataRows(data,table){
     function getPrevTen(data){
 
         let planets  = data;
+        let btn_3 = document.getElementById('btn_3');
 
 
         for (let i = 0; i < planets.results.length; i++) {
@@ -174,5 +177,7 @@ function makeDataRows(data,table){
         
     
             }
+            btn_2.style.display = 'block';
+            btn_3.style.display = 'none';
     }
     
