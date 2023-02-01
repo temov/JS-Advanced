@@ -23,6 +23,8 @@
 
 table = document.getElementById('table');
 let button = document.getElementById('btn');
+let button2 = document.getElementById('btn_2');
+let button3 = document.getElementById('btn_3');
 let headers = ["Name", "Climate", "Gravity",'Population'];
 let pageNum = 1;
 
@@ -39,6 +41,7 @@ button.addEventListener('click', () =>{
 
          makeHeaders(table);
          makeDataRows(data,table);
+        button.style.display = 'none';
         
 
     })
@@ -81,17 +84,14 @@ function makeDataRows(data,table){
         datasRow.innerHTML = `<td style ='border:1px solid black';>${planets.results[i].name}</td><td style ='border:1px solid black';>${planets.results[i].climate}</td><td style ='border:1px solid black';>${planets.results[i].gravity}</td><td style ='border:1px solid black';>${planets.results[i].population}</td>`;
         table.appendChild(datasRow);
         
-        
         }
-        let button2 = document.createElement('button');
-        button2.id = 'btn_2';
-        button2.innerHTML = 'Next 10';
-        button.after(button2);
-        button.style.display = 'none';
+       
         
-
-        button2.addEventListener('click', () =>{
-            if (pageNum >=1){
+    
+    }
+    
+     button2.addEventListener('click', () =>{
+            if ((pageNum >=1)&&(pageNum < 6)){
                 pageNum++;
 
             fetch('https://swapi.dev/api/planets/?page='+pageNum)
@@ -102,7 +102,7 @@ function makeDataRows(data,table){
             })
             .then(function(data){
                 console.log('Data:',data);
-                getNextTen(data);
+                getTenData(data);
                 
         
             })
@@ -113,38 +113,12 @@ function makeDataRows(data,table){
         }
     
         })
-        
-    
-    }
+         
+         button3.addEventListener('click', () =>{
+            if ((pageNum>1)&&(pageNum<=6)){
+                pageNum--;
 
-    function getNextTen(data){
-
-       
-        let planets  = data;
-
-        let btn_2 = document.getElementById('btn_2');
-       
-
-        for (let i = 0; i < planets.results.length; i++) {
-    
-               let tr = document.querySelectorAll('tr');
-
-
-                tr[i+1].innerHTML = `<td style ='border:1px solid black', color:'red';>${planets.results[i].name}</td><td style ='border:1px solid black';>${planets.results[i].climate}</td><td style ='border:1px solid black';>${planets.results[i].gravity}</td><td style ='border:1px solid black';>${planets.results[i].population}</td>`;
-        
-    
-            }
-
-            let button3 = document.createElement('button');
-            button3.innerHTML = 'Previous 10';
-            button3.id = 'btn_3';
-            btn_2.after(button3);
-            
-
-
-            button3.addEventListener('click', () =>{
-
-                fetch('https://swapi.dev/api/planets/?page='+pageNum)
+                fetch('https://swapi.dev/api/planets/?page='+ pageNum)
                 .then(function(res){
             
                     return res.json();
@@ -152,7 +126,7 @@ function makeDataRows(data,table){
                 })
                 .then(function(data){
                     console.log('Data:',data);
-                    getPrevTen(data);
+                    getTenData(data);
                     
             
                 })
@@ -161,21 +135,16 @@ function makeDataRows(data,table){
                     console.log('error:', error);
                 })
         
-        
+               }
             })
 
 
-    }
 
-    function getPrevTen(data){
+    function getTenData(data){
 
-        if(pageNum >=1){
-
-            pageNum--
-
+       
         let planets  = data;
-        let btn_3 = document.getElementById('btn_3');
-
+       
 
         for (let i = 0; i < planets.results.length; i++) {
     
@@ -186,12 +155,6 @@ function makeDataRows(data,table){
         
     
             }
-            btn_2.style.display = 'block';
-            btn_3.style.display = 'none';
 
-            
-            
-        }
-        
     }
     
